@@ -19,8 +19,25 @@ import java.util.Locale;
 
 public class Settings {
 
-    public Settings(Context context) {
+    private Context mContext;
 
+    public Settings(Context context) {
+        mContext = context;
+        setApiKey("214198389284d1fbd19cfd0fc21b2042");
+    }
+
+    private static final String PREF_API_KEY = "pref.api.key";
+
+    public String getApiKey() {
+        return PreferenceManager.getDefaultSharedPreferences(mContext)
+                .getString(PREF_API_KEY,"");
+    }
+
+    public void setApiKey(String apiKey) {
+        PreferenceManager.getDefaultSharedPreferences(mContext)
+                .edit()
+                .putString(PREF_API_KEY, apiKey)
+                .apply();
     }
 
 }

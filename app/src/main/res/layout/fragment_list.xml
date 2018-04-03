@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+          android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/et_city_name"
+            style="@style/BaseTextStyle"
+            android:hint="Enter city name here"
+            android:layout_marginStart="10dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rel_add_city"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@android:color/holo_green_light"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            >
+
+            <TextView
+                style="@style/BaseTextStyle"
+                android:text="add"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/test_view"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@android:color/holo_blue_bright"
+            android:layout_marginStart="30dp"
+            android:layout_gravity="center_vertical"
+            />
+
+    </LinearLayout>
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        />
+
+
+
+</LinearLayout>

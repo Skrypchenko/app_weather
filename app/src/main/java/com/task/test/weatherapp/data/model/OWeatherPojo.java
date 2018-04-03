@@ -1,20 +1,21 @@
 
 package com.task.test.weatherapp.data.model;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class List {
+public class OWeatherPojo {
 
     @SerializedName("coord")
     @Expose
     private Coord coord;
-    @SerializedName("sys")
-    @Expose
-    private Sys sys;
     @SerializedName("weather")
     @Expose
-    private java.util.List<Weather> weather = null;
+    private List<Weather> weather = null;
+    @SerializedName("base")
+    @Expose
+    private String base;
     @SerializedName("main")
     @Expose
     private Main main;
@@ -30,12 +31,18 @@ public class List {
     @SerializedName("dt")
     @Expose
     private Integer dt;
+    @SerializedName("sys")
+    @Expose
+    private Sys sys;
     @SerializedName("id")
     @Expose
     private Integer id;
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("cod")
+    @Expose
+    private Integer cod;
 
     public Coord getCoord() {
         return coord;
@@ -45,20 +52,20 @@ public class List {
         this.coord = coord;
     }
 
-    public Sys getSys() {
-        return sys;
-    }
-
-    public void setSys(Sys sys) {
-        this.sys = sys;
-    }
-
-    public java.util.List<Weather> getWeather() {
+    public List<Weather> getWeather() {
         return weather;
     }
 
-    public void setWeather(java.util.List<Weather> weather) {
+    public void setWeather(List<Weather> weather) {
         this.weather = weather;
+    }
+
+    public String getBase() {
+        return base;
+    }
+
+    public void setBase(String base) {
+        this.base = base;
     }
 
     public Main getMain() {
@@ -101,6 +108,14 @@ public class List {
         this.dt = dt;
     }
 
+    public Sys getSys() {
+        return sys;
+    }
+
+    public void setSys(Sys sys) {
+        this.sys = sys;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -115,6 +130,14 @@ public class List {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getCod() {
+        return cod;
+    }
+
+    public void setCod(Integer cod) {
+        this.cod = cod;
     }
 
 }
