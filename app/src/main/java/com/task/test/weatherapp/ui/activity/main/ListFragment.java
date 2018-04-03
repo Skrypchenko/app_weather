@@ -90,7 +90,7 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        mPresenter.load(mCities);
         mRecyclerMain.setLayoutManager(new LinearLayoutManager(getActivity()));
         CityAdapter adapter = new CityAdapter(CityWrapper.createCityWrapper(mCities));
         mRecyclerMain.setAdapter(adapter);
@@ -109,6 +109,9 @@ public class ListFragment extends BaseFragment implements ListMvpView {
                 if (cityName.length() > 0) {
                     CityWrapper wrapper = new CityWrapper(cityName);
                     ((CityAdapter) mRecyclerMain.getAdapter()).addNewWrapper(wrapper);
+                    mCities.add(cityName);
+                    mPresenter.load(mCities);
+                    mEtCityName.setText("");
                 }
             }
         });
