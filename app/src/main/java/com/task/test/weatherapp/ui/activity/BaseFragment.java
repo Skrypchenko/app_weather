@@ -12,6 +12,16 @@ public class BaseFragment extends Fragment {
     public ActivityComponent getComponent() {
         return ((BaseActivity) getActivity()).activityComponent();
     }
+
+    public int getIconIdRes(String name) {
+        return getActivity()
+                .getResources()
+                .getIdentifier(
+                        name,
+                        "drawable",
+                        getActivity().getPackageName()
+                );
+    }
     
 
     public boolean isInetAvailable() {

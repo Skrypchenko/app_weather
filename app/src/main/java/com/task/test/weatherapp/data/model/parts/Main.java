@@ -1,5 +1,5 @@
 
-package com.task.test.weatherapp.data.model;
+package com.task.test.weatherapp.data.model.parts;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -30,32 +30,32 @@ public class Main {
         this.temp = temp;
     }
 
-    public Double getPressure() {
-        return pressure;
+    public long getPressure() {
+        return Math.round(pressure);
     }
 
     public void setPressure(Double pressure) {
         this.pressure = pressure;
     }
 
-    public Double getHumidity() {
-        return humidity;
+    public long getHumidity() {
+        return Math.round(humidity);
     }
 
     public void setHumidity(Double humidity) {
         this.humidity = humidity;
     }
 
-    public Double getTempMin() {
-        return tempMin;
+    public long getTempMin() {
+        return Math.round(tempMin);
     }
 
     public void setTempMin(Double tempMin) {
         this.tempMin = tempMin;
     }
 
-    public Double getTempMax() {
-        return tempMax;
+    public long getTempMax() {
+        return Math.round(tempMax);
     }
 
     public void setTempMax(Double tempMax) {

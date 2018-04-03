@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -44,8 +46,8 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     EditText mEtCityName;
     @BindView(R.id.rel_add_city)
     RelativeLayout mRelAddCity;
-    @BindView(R.id.test_view)
-    View mTestView;
+    @BindView(R.id.iv_test_view)
+    ImageView mTestView;
     Unbinder unbinder;
 
     @Inject
@@ -57,13 +59,9 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     @Inject
     ListPresenter mPresenter;
 
-    private List<CityWrapper> mCities = new ArrayList<>();
-    {
-        mCities.add(new CityWrapper("Kharkiv"));
-        mCities.add(new CityWrapper("Kiyv"));
-        mCities.add(new CityWrapper("Dnipro"));
-        mCities.add(new CityWrapper("London"));
-    }
+    private CityAdapter mCityAdapter;
+
+
 
 
 
@@ -90,15 +88,18 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.load(mCities);
+
         mRecyclerMain.setLayoutManager(new LinearLayoutManager(getActivity()));
-        CityAdapter adapter = new CityAdapter(mCities);
-        mRecyclerMain.setAdapter(adapter);
+        List<CityWrapper> list = new ArrayList<>();
+        mCityAdapter =  new CityAdapter(list);
+        mRecyclerMain.setAdapter(mCityAdapter);
+
+        mPresenter.test();
 
         mTestView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.load(mCities);
+                mPresenter.load(mCityAdapter.getList());
             }
         });
 
@@ -108,9 +109,8 @@ public class ListFragment extends BaseFragment implements ListMvpView {
                 String cityName = mEtCityName.getText().toString();
                 if (cityName.length() > 0) {
                     CityWrapper wrapper = new CityWrapper(cityName);
-                    ((CityAdapter) mRecyclerMain.getAdapter()).addNewWrapper(wrapper);
-                    mCities.add(new CityWrapper(cityName));
-                    mPresenter.load(mCities);
+                    mCityAdapter.addNewWrapper(wrapper);
+                    mPresenter.load(wrapper.getUid(), wrapper);
                     mEtCityName.setText("");
                 }
             }
@@ -119,8 +119,8 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     }
 
     @Override
-    public void updateItem(int id, OWeatherPojo pojo) {
-        ((CityAdapter) mRecyclerMain.getAdapter()).updateCityWrapperById(id, pojo);
+    public void updateItem(UUID id, OWeatherPojo pojo) {
+        mCityAdapter.updateCityWrapperById(id, pojo);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

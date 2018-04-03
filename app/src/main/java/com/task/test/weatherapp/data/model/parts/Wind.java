@@ -1,5 +1,5 @@
 
-package com.task.test.weatherapp.data.model;
+package com.task.test.weatherapp.data.model.parts;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

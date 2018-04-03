@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_gravity="center_horizontal"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="#FFEAEAEA"
-                android:layout_marginBottom="5dp"
+                android:background="@drawable/item_shape"
+                android:layout_marginBottom="10dp"
     >
 
     <TextView
@@ -36,21 +34,21 @@
         style="@style/BaseTextStyle"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="20dp"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/iv_item_del"
-        android:textStyle="bold"
         android:textSize="22dp"
         tools:text="+3"
         />
 
     <ImageView
         android:id="@+id/iv_item_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:layout_toStartOf="@id/tv_item_temp"
         android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="120dp"
         />
 
 

@@ -2,6 +2,8 @@ package com.task.test.weatherapp.ui.view;
 
 import com.task.test.weatherapp.data.model.OWeatherPojo;
 
+import java.util.UUID;
+
 public interface ListMvpView extends MvpView {
-    void updateItem(int id, OWeatherPojo pojo);
+    void updateItem(UUID id, OWeatherPojo pojo);
 }

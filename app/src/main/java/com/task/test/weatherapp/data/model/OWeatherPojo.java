@@ -4,6 +4,12 @@ package com.task.test.weatherapp.data.model;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.task.test.weatherapp.data.model.parts.Clouds;
+import com.task.test.weatherapp.data.model.parts.Coord;
+import com.task.test.weatherapp.data.model.parts.Main;
+import com.task.test.weatherapp.data.model.parts.Sys;
+import com.task.test.weatherapp.data.model.parts.Weather;
+import com.task.test.weatherapp.data.model.parts.Wind;
 
 public class OWeatherPojo {
 

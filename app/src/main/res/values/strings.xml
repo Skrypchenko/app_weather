@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">WeatherApp</string>
 
+    <string name="str_error">Error</string>
+    <string name="str_name">Wheather App</string>
+
 </resources>
