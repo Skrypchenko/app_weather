@@ -57,12 +57,12 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     @Inject
     ListPresenter mPresenter;
 
-    private List<String> mCities = new ArrayList<>();
+    private List<CityWrapper> mCities = new ArrayList<>();
     {
-        mCities.add("Kharkiv");
-        mCities.add("Kiyv");
-        mCities.add("Dnipro");
-        mCities.add("London");
+        mCities.add(new CityWrapper("Kharkiv"));
+        mCities.add(new CityWrapper("Kiyv"));
+        mCities.add(new CityWrapper("Dnipro"));
+        mCities.add(new CityWrapper("London"));
     }
 
 
@@ -92,7 +92,7 @@ public class ListFragment extends BaseFragment implements ListMvpView {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.load(mCities);
         mRecyclerMain.setLayoutManager(new LinearLayoutManager(getActivity()));
-        CityAdapter adapter = new CityAdapter(CityWrapper.createCityWrapper(mCities));
+        CityAdapter adapter = new CityAdapter(mCities);
         mRecyclerMain.setAdapter(adapter);
 
         mTestView.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +109,7 @@ public class ListFragment extends BaseFragment implements ListMvpView {
                 if (cityName.length() > 0) {
                     CityWrapper wrapper = new CityWrapper(cityName);
                     ((CityAdapter) mRecyclerMain.getAdapter()).addNewWrapper(wrapper);
-                    mCities.add(cityName);
+                    mCities.add(new CityWrapper(cityName));
                     mPresenter.load(mCities);
                     mEtCityName.setText("");
                 }

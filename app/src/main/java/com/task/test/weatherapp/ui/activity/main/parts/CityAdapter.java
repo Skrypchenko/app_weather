@@ -42,14 +42,18 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
     }
 
     public void updateCityWrapperById(int id, OWeatherPojo pojo) {
-        CityWrapper cityWrapper = items.get(id);
-        cityWrapper.setWeatherPojo(pojo);
-        notifyDataSetChanged();
+        if (id < items.size() && id >= 0) {
+            CityWrapper cityWrapper = items.get(id);
+            cityWrapper.setWeatherPojo(pojo);
+            notifyDataSetChanged();
+        }
     }
 
     public void removeItemById(int id) {
-        items.remove(id);
-        notifyDataSetChanged();
+        if (id < items.size() && id >= 0) {
+            items.remove(id);
+            notifyDataSetChanged();
+        }
     }
 
     public void addNewWrapper(CityWrapper wrapper) {

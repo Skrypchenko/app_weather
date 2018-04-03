@@ -4,6 +4,7 @@ package com.task.test.weatherapp.ui.presenter;
 import android.util.Log;
 
 import com.task.test.weatherapp.data.Settings;
+import com.task.test.weatherapp.data.model.CityWrapper;
 import com.task.test.weatherapp.data.model.OWeatherPojo;
 import com.task.test.weatherapp.data.service.ApiCommonService;
 import com.task.test.weatherapp.di.ConfigPersistent;
@@ -30,10 +31,10 @@ public class ListPresenter extends BasePresenter<ListMvpView> {
         mSettings = settings;
     }
 
-    public void load(List<String> cities) {
+    public void load(List<CityWrapper> cities) {
         for (int i = 0; i < cities.size(); i++) {
             final int id = i;
-            mApi.loadWeatherForCity(cities.get(i), "metric", mSettings.getApiKey(), "ru")
+            mApi.loadWeatherForCity(cities.get(i).getCityName(), "metric", mSettings.getApiKey(), "ru")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<OWeatherPojo>() {
