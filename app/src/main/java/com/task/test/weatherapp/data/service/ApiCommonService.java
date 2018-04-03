@@ -8,9 +8,8 @@ import rx.Observable;
 
 public interface ApiCommonService {
     @GET("/data/2.5/weather")
-    Observable<OWeatherPojo> loadWeatherForLatLon (
-            @Query("lat") String lat,
-            @Query("lon") String lon,
+    Observable<OWeatherPojo> loadWeatherForCity(
+            @Query("q") String city,
             @Query("units") String units,
             @Query("appid") String appid,
             @Query("lang") String lang
