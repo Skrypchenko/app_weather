@@ -3,7 +3,173 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/shade"
+    android:clickable="true"
     >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_shape"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tv_city_name"
+                    style="@style/BaseTextStyle"
+                    android:textStyle="bold"
+                    android:textSize="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/tv_descr"
+                style="@style/BaseTextStyle"
+                />
+
+            <RelativeLayout
+                style="@style/DetailRelStyle"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    style="@style/DetailTextLeftColumnStyle"
+                    android:text="@string/str_current_temp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_current_temp"
+                    style="@style/DetailTextRightColumnStyle"
+                    android:text="+10"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/DetailRelStyle"
+                >
+
+                <TextView
+                    style="@style/DetailTextLeftColumnStyle"
+                    android:text="@string/str_max_temp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_max_temp"
+                    style="@style/DetailTextRightColumnStyle"
+                    android:text="+10"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/DetailRelStyle"
+                >
+
+                <TextView
+                    style="@style/DetailTextLeftColumnStyle"
+                    android:text="@string/str_min_temp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_min_temp"
+                    style="@style/DetailTextRightColumnStyle"
+                    android:text="+10"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/DetailRelStyle"
+                >
+
+                <TextView
+                    style="@style/DetailTextLeftColumnStyle"
+                    android:text="@string/str_humidity"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_humidity"
+                    style="@style/DetailTextRightColumnStyle"
+                    android:text="+10"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/DetailRelStyle"
+                >
+
+                <TextView
+                    style="@style/DetailTextLeftColumnStyle"
+                    android:text="@string/str_pressure"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_pressure"
+                    style="@style/DetailTextRightColumnStyle"
+                    android:text="+10"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/DetailRelStyle"
+                >
+
+                <TextView
+                    style="@style/DetailTextLeftColumnStyle"
+                    android:text="@string/str_wind"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_wind"
+                    style="@style/DetailTextRightColumnStyle"
+                    android:text="+10"
+                    />
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
 
 

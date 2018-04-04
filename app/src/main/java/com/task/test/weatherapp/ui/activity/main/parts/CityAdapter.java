@@ -16,9 +16,7 @@ import com.task.test.weatherapp.util.Lgi;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-import java.util.UUID;
 
-import butterknife.BindView;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
 
@@ -48,21 +46,38 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
         return items;
     }
 
-    public void updateCityWrapperById(UUID id, OWeatherPojo pojo) {
-        Log.v("fatal", "id: " + id + ", name: " + pojo.getName());
+    public void updateCityWrapperByName(String cityName, OWeatherPojo pojo) {
         if (items != null && items.size() > 0) {
             for (CityWrapper cityWrapper : items) {
-                UUID uuid = cityWrapper.getUid();
-                long v1 = uuid.getLeastSignificantBits();
-                long v2 = id.getLeastSignificantBits();
-                if (v1 == v2) {
+                String name = cityWrapper.getCityName().toLowerCase();
+                String newCityName = cityName.toLowerCase();
+                if (name != null && cityName != null && newCityName.equals(name)) {
                     cityWrapper.setWeatherPojo(pojo);
+                    notifyDataSetChanged();
                     return;
                 }
             }
+
+            CityWrapper cityWrapper = new CityWrapper(pojo);
+            items.add(cityWrapper);
+
         } else {
             CityWrapper cityWrapper = new CityWrapper(pojo);
             items.add(cityWrapper);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void updateCityWrapper(CityWrapper cityWrapperNew) {
+        if (items != null && items.size() > 0) {
+            for (CityWrapper cityWrapper : items) {
+                if (cityWrapper.getCityName().toLowerCase().equals(cityWrapperNew.getCityName().toLowerCase())) {
+                    return;
+                }
+            }
+            items.add(cityWrapperNew);
+        } else {
+            items.add(cityWrapperNew);
         }
         notifyDataSetChanged();
     }
@@ -101,7 +116,14 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
             mIvDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EventBus.getDefault().post(new EventDelItem(getAdapterPosition()));
+                    EventBus.getDefault().post(new EventDelItem(getAdapterPosition(), mCityWrapper.getCityName()));
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventBus.getDefault().post(new EventOpenCity(mCityWrapper));
                 }
             });
 
@@ -112,36 +134,31 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
 
             mTvItemCityName.setText(item.getCityName());
 
-            if (item.getWeatherPojo() != null) {
 
-                long t = item.getWeatherPojo().getMain().getTemp();
+
+            long t = item.getCurrentTemp();
+            if (t != Long.MIN_VALUE) {
                 String temp = (t > 0 ? "+" + t : "-" + t) + " C";
-
                 mTvItemTemp.setText(temp);
-
-
-                String iconName = item.getIconName();
-                if (iconName != null && iconName.length() > 0) {
-                    int resId = mIvItemIcon.getContext()
-                            .getResources()
-                            .getIdentifier(
-                                    iconName,
-                                    "drawable",
-                                     mIvItemIcon.getContext().getPackageName()
-                            );
-
-                    if (resId != 0) {
-                        mIvItemIcon.setImageDrawable(mIvItemIcon.getContext().getResources().getDrawable(resId));
-                    }
-                }
-
-
             } else {
                 mTvItemTemp.setText(mTvItemTemp.getContext().getText(R.string.str_error));
             }
 
+            String iconName = item.getIconName();
 
+            if (iconName != null && iconName.length() > 0) {
+                int resId = mIvItemIcon.getContext()
+                        .getResources()
+                        .getIdentifier(
+                                iconName,
+                                "drawable",
+                                mIvItemIcon.getContext().getPackageName()
+                        );
 
+                if (resId != 0) {
+                    mIvItemIcon.setImageDrawable(mIvItemIcon.getContext().getResources().getDrawable(resId));
+                }
+            }
 
         }
     }

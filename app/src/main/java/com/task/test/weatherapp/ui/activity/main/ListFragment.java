@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.task.test.weatherapp.R;
 import com.task.test.weatherapp.data.Settings;
@@ -20,9 +19,9 @@ import com.task.test.weatherapp.data.service.ApiCommonService;
 import com.task.test.weatherapp.ui.activity.BaseFragment;
 import com.task.test.weatherapp.ui.activity.main.parts.CityAdapter;
 import com.task.test.weatherapp.ui.activity.main.parts.EventDelItem;
+import com.task.test.weatherapp.ui.activity.main.parts.EventOpenCity;
 import com.task.test.weatherapp.ui.presenter.ListPresenter;
 import com.task.test.weatherapp.ui.view.ListMvpView;
-import com.task.test.weatherapp.util.Lgi;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,7 +29,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -46,8 +44,8 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     EditText mEtCityName;
     @BindView(R.id.rel_add_city)
     RelativeLayout mRelAddCity;
-    @BindView(R.id.iv_test_view)
-    ImageView mTestView;
+    @BindView(R.id.iv_download)
+    ImageView mIvDownload;
     Unbinder unbinder;
 
     @Inject
@@ -59,14 +57,15 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     @Inject
     ListPresenter mPresenter;
 
+
     private CityAdapter mCityAdapter;
 
+    private FragmentHost mHost;
 
 
-
-
-    public static ListFragment newInstance() {
+    public static ListFragment newInstance(FragmentHost host) {
         ListFragment f = new ListFragment();
+        f.setFragmentHost(host);
         return f;
     }
 
@@ -89,14 +88,11 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerMain.setLayoutManager(new LinearLayoutManager(getActivity()));
-        List<CityWrapper> list = new ArrayList<>();
-        mCityAdapter =  new CityAdapter(list);
-        mRecyclerMain.setAdapter(mCityAdapter);
+        initAdapter();
 
-        mPresenter.test();
+        mPresenter.init();
 
-        mTestView.setOnClickListener(new View.OnClickListener() {
+        mIvDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPresenter.load(mCityAdapter.getList());
@@ -108,9 +104,9 @@ public class ListFragment extends BaseFragment implements ListMvpView {
             public void onClick(View view) {
                 String cityName = mEtCityName.getText().toString();
                 if (cityName.length() > 0) {
-                    CityWrapper wrapper = new CityWrapper(cityName);
-                    mCityAdapter.addNewWrapper(wrapper);
-                    mPresenter.load(wrapper.getUid(), wrapper);
+                    String str = cityName.toLowerCase();
+                    String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
+                    mPresenter.addNewCity(cap);
                     mEtCityName.setText("");
                 }
             }
@@ -118,14 +114,42 @@ public class ListFragment extends BaseFragment implements ListMvpView {
 
     }
 
+
+    public void setFragmentHost(FragmentHost host) {
+        mHost = host;
+    }
+
     @Override
-    public void updateItem(UUID id, OWeatherPojo pojo) {
-        mCityAdapter.updateCityWrapperById(id, pojo);
+    public void updateItem(String cityName, OWeatherPojo pojo) {
+        mCityAdapter.updateCityWrapperByName(cityName, pojo);
+    }
+
+    @Override
+    public void updateItemOffline(CityWrapper cityWrapper) {
+        mCityAdapter.updateCityWrapper(cityWrapper);
+    }
+
+    @Override
+    public void initAdapterByList(List<CityWrapper> list) {
+        mCityAdapter = new CityAdapter(list);
+        mRecyclerMain.setAdapter(mCityAdapter);
+    }
+
+    @Override
+    public boolean isOnline() {
+        return isInetAvailable();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCategoryClick(EventDelItem eventDelItem) {
         ((CityAdapter) mRecyclerMain.getAdapter()).removeItemById(eventDelItem.mId);
+        mPresenter.removeItem(eventDelItem.mCityName);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCityOpen(EventOpenCity eventOpenCity) {
+        DetailFragment f = DetailFragment.newInstance(eventOpenCity.mCityWrapper);
+        mHost.openFragment(f, DetailFragment.class.getName());
     }
 
     @Override
@@ -154,5 +178,11 @@ public class ListFragment extends BaseFragment implements ListMvpView {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void initAdapter() {
+        mRecyclerMain.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mCityAdapter = new CityAdapter(new ArrayList<CityWrapper>());
+        mRecyclerMain.setAdapter(mCityAdapter);
     }
 }

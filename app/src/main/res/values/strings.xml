@@ -4,4 +4,12 @@
     <string name="str_error">Error</string>
     <string name="str_name">Wheather App</string>
 
+    <string name="str_current_temp">Current temperature:</string>
+    <string name="str_max_temp">Max temperature:</string>
+    <string name="str_min_temp">Min temperature:</string>
+    <string name="str_humidity">humidity:</string>
+    <string name="str_pressure">Pressure:</string>
+    <string name="str_wind">Wind (km/h):</string>
+    <string name="str_descr">Description:</string>
+
 </resources>

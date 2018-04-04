@@ -26,9 +26,10 @@ public class CityWrapper {
 
     //TODO:----------------- TO SQLITE
     private String mCityName;
-    private UUID mUid;
 
     private long mLastUpdate;
+
+    private long mCurrentTemp = Long.MIN_VALUE;
 
     private long mMaxTemp;
     private long mMinTemp;
@@ -49,19 +50,14 @@ public class CityWrapper {
 
     public CityWrapper(String cityName) {
         mCityName = cityName;
-        mUid = UUID.randomUUID();
 
     }
 
     public CityWrapper(OWeatherPojo pojo) {
         mWeatherPojo = pojo;
-        mUid = UUID.randomUUID();
         update();
     }
 
-    public UUID getUid() {
-        return mUid;
-    }
 
     public String getCityName() {
         return mCityName;
@@ -115,6 +111,46 @@ public class CityWrapper {
         return mIconName;
     }
 
+    public void setLastUpdate(long lastUpdate) {
+        mLastUpdate = lastUpdate;
+    }
+
+    public void setMaxTemp(long maxTemp) {
+        mMaxTemp = maxTemp;
+    }
+
+    public void setMinTemp(long minTemp) {
+        mMinTemp = minTemp;
+    }
+
+    public void setHumidity(long humidity) {
+        mHumidity = humidity;
+    }
+
+    public void setPressure(long pressure) {
+        mPressure = pressure;
+    }
+
+    public void setWind(long wind) {
+        mWind = wind;
+    }
+
+    public void setWeatherDescription(String weatherDescription) {
+        mWeatherDescription = weatherDescription;
+    }
+
+    public void setIconName(String iconName) {
+        mIconName = iconName;
+    }
+
+    public long getCurrentTemp() {
+        return mCurrentTemp;
+    }
+
+    public void setCurrentTemp(long currentTemp) {
+        mCurrentTemp = currentTemp;
+    }
+
     private void update() {
         mCityName = mWeatherPojo.getName();
         mLastUpdate = System.currentTimeMillis();
@@ -122,6 +158,7 @@ public class CityWrapper {
         if (mWeatherPojo.getMain() != null) {
             mMaxTemp = mWeatherPojo.getMain().getTempMax();
             mMinTemp = mWeatherPojo.getMain().getTempMin();
+            mCurrentTemp = mWeatherPojo.getMain().getTemp();
             mHumidity = mWeatherPojo.getMain().getHumidity();
             mPressure = mWeatherPojo.getMain().getPressure();
         }

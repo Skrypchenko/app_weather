@@ -19,7 +19,7 @@ import java.util.Locale;
  */
 
 public class Lgi {
-    public static boolean LOG = false;
+    public static boolean LOG = true;
     private static String TAG = "fatal";
 
     public static void i(String tag, String string) {
