@@ -3,6 +3,7 @@ package com.task.test.weatherapp;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.task.test.weatherapp.db.DatabaseOpenHelper;
 import com.task.test.weatherapp.di.component.AppComponent;
 import com.task.test.weatherapp.di.component.DaggerAppComponent;
 import com.task.test.weatherapp.di.module.ApplicationModule;
@@ -13,6 +14,7 @@ public class WeatherApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        DatabaseOpenHelper.getDatabaseOpenHelperInstance(getApplicationContext());
         mApplicationComponent = DaggerAppComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
